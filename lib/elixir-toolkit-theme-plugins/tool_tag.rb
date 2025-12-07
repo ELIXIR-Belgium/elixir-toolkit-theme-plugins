@@ -47,25 +47,24 @@ module Jekyll
                     "id"           => res["id"],
                     "country_code" => country_code,
                     "country_name" => country_name,
-                    "page_path"    => f                # absolute file path; we’ll resolve to site URL
+                    "page_path"    => f
                 }
             end
         end
 
         # --- 2) instances from tool_and_resource_list.yml itself ---
-        #
         (@tools || []).each do |tool|
             parent_id = tool["instance_of"]
             next if parent_id.nil? || parent_id == "NA"
 
             @instances_by_tool[parent_id] << {
                 "name"         => (tool["name"] || tool["id"] || "Instance"),
-                "url"          => tool["url"],   # normally defined for tools
+                "url"          => tool["url"], # normally defined for tools
                 "id"           => tool["id"],
                 # YAML entries often don’t have country information; leave blank so no flag
                 "country_code" => "",
                 "country_name" => "",
-                "page_path"    => nil            # no page file to resolve
+                "page_path"    => nil # no page file to resolve
                 }
             end
         end
@@ -128,7 +127,6 @@ module Jekyll
             "<a href='#{html_attr(url)}' target='_blank' rel='noopener'><span class='badge bg-dark text-white hover-primary'><i class='fa-solid #{icon} me-2'></i>#{html_escape(label)}</span></a>"
         end
 
-        # Dropdown identical to your table style (badge-sized)
         def instances_dropdown(instances, site, tool_id)
             dd_id = "instances-dd-#{tool_id}-#{object_id}"
 
