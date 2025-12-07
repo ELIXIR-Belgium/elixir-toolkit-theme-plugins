@@ -9,12 +9,17 @@ module Jekyll
                 return data unless data.is_a?(Array)
 
                 load_page_data
+                instances_index = Jekyll::Ett::ToolTag.instances_index
 
                 data.each do |tool|
                     next unless tool.is_a?(Hash)
 
                     if tool["id"] && @related_pages[tool["id"]]
                         tool["related_pages"] = @related_pages[tool["id"]].to_a
+                    end
+
+                    if tool["id"] && instances_index[tool["id"]]
+                        tool["instances"] = instances_index[tool["id"]]
                     end
                 end
 
@@ -30,7 +35,6 @@ module Jekyll
                 Dir.glob(pages_path).each do |f|
                     file = File.read(f)
                     page_id_matches = file.match(/page_id:\s*(\w+)/)
-
                     next unless page_id_matches
 
                     page_id = page_id_matches[1]
