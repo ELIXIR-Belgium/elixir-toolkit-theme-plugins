@@ -5,12 +5,15 @@ module Jekyll
     class Ett
         module ToolTableFilter
         def add_related_pages(data)
+            return [] if data.nil?         # nil → empty list
+            return data unless data.is_a?(Array)
             load_page_data
 
-            for tool in data
-            if tool['id'] && @related_pages[tool['id']]
+            data.each do |tool|
+                next unless tool.is_a?(Hash)
+                if tool['id'] && @related_pages[tool['id']]
                 tool['related_pages'] = @related_pages[tool['id']].to_a
-            end
+                end
             end
 
             data

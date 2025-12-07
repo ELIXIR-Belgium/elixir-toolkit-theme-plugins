@@ -15,15 +15,18 @@ module Jekyll
             tools_path = File.join(Dir.pwd, "_data", "tool_and_resource_list.yml")
             @tools = YAML.load(File.read(tools_path))
         end
-
+        
         # Scan Markdown pages for front matter declaring national_resources
         # and index instances by their "instance_of" tool id
         def load_instances
-            @instances_by_tool = Hash.new { |h, k| h[k] = [] }
-            pages_path = File.join(Dir.pwd, "**", "*.md")
-            files = Dir.glob(pages_path)
+        # Single combined index for *all* instances
+        @instances_by_tool = Hash.new { |h, k| h[k] = [] }
 
-            files.each do |f|
+        # --- 1) instances from national_resources in page front matter ---
+        pages_path = File.join(Dir.pwd, "**", "*.md")
+        files = Dir.glob(pages_path)
+
+        files.each do |f|
             raw = File.read(f)
             fm = extract_front_matter(raw)
             next unless fm.is_a?(Hash)
@@ -39,16 +42,34 @@ module Jekyll
                 next if inst_of.nil? || inst_of == "NA"
 
                 @instances_by_tool[inst_of] << {
-                "name"         => (res["name"] || res["id"] || "Instance"),
-                "url"          => res["url"],      # might be nil; we’ll fall back to page url later
-                "id"           => res["id"],
-                "country_code" => country_code,
-                "country_name" => country_name,
-                "page_path"    => f                # absolute file path; we’ll resolve to site URL
+                    "name"         => (res["name"] || res["id"] || "Instance"),
+                    "url"          => res["url"],
+                    "id"           => res["id"],
+                    "country_code" => country_code,
+                    "country_name" => country_name,
+                    "page_path"    => f                # absolute file path; we’ll resolve to site URL
                 }
             end
+        end
+
+        # --- 2) instances from tool_and_resource_list.yml itself ---
+        #
+        (@tools || []).each do |tool|
+            parent_id = tool["instance_of"]
+            next if parent_id.nil? || parent_id == "NA"
+
+            @instances_by_tool[parent_id] << {
+                "name"         => (tool["name"] || tool["id"] || "Instance"),
+                "url"          => tool["url"],   # normally defined for tools
+                "id"           => tool["id"],
+                # YAML entries often don’t have country information; leave blank so no flag
+                "country_code" => "",
+                "country_name" => "",
+                "page_path"    => nil            # no page file to resolve
+                }
             end
         end
+
 
         # Accepts a file string, returns parsed YAML front matter hash or nil
         def extract_front_matter(file_string)
