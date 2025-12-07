@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.name          = "elixir-toolkit-theme-plugins"
   spec.version       =  Jekyll::Ett::VERSION.dup
   spec.authors       = ["bedroesb", "janslifka", "MarekSuchanek"]
-  spec.email         = ["bedro@psb.vib-ugent.be\n"]
+  spec.email         = ["bert.droesbeke@vib.be\n"]
 
   spec.summary       = "Plugins to work together with ELIXIR Toolkit theme"
   spec.homepage      = "https://elixir-belgium.github.io/elixir-toolkit-theme-plugins/"
