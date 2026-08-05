@@ -108,7 +108,7 @@ module Jekyll
                     data-bs-content="<h5>#{html_escape(tool["name"])}</h5><div class='mb-2'>#{html_escape(tool["description"])}</div><div class='d-flex flex-wrap gap-1'>#{tags}</div>"
                     data-bs-template="<div class='popover popover-tool' role='tooltip'><div class='popover-arrow'></div><h3 class='popover-header'></h3><div class='popover-body'></div></div>"
                     data-bs-html="true"
-                    ><i class="fa-solid fa-wrench fa-sm me-2"></i>#{ html_escape(tool["name"]) }</a>}
+                    ><i class="icon-wrench me-2"></i>#{ html_escape(tool["name"]) }</a>}
             end
 
             def find_tool(tool_id)
@@ -119,14 +119,14 @@ module Jekyll
 
             def create_tags(tool, site)
                 tags = ""
-                tags << create_tag("#{tool["url"]}", "fa-link", "Website")
+                tags << create_tag("#{tool["url"]}", "icon-link", "Website")
                 if tool["registry"]
                     registry = tool["registry"]
-                    tags << create_tag("https://bio.tools/#{registry["biotools"]}", "fa-info", "Tool info") if registry["biotools"] && registry["biotools"] != "NA"
-                    tags << create_tag("https://fairsharing.org/FAIRsharing.#{registry["fairsharing"]}", "fa-database", "Standards/Databases") if registry["fairsharing"] && registry["fairsharing"] != "NA"
-                    tags << create_tag("https://fairsharing.org/#{registry["fairsharing-coll"]}", "fa-database", "Standards/Databases") if registry["fairsharing-coll"] && registry["fairsharing-coll"] != "NA"
-                    tags << create_tag("https://tess.elixir-europe.org/search?q=#{registry["tess"]}", "fa-graduation-cap", "Training") if registry["tess"] && registry["tess"] != "NA"
-                    tags << create_tag("https://europepmc.org/article/MED/#{registry["europmc"]}", "fa-book", "Publication") if registry["europmc"] && registry["europmc"] != "NA"
+                    tags << create_tag("https://bio.tools/#{registry["biotools"]}", "icon-info", "Tool info") if registry["biotools"] && registry["biotools"] != "NA"
+                    tags << create_tag("https://fairsharing.org/FAIRsharing.#{registry["fairsharing"]}", "icon-database", "Standards/Databases") if registry["fairsharing"] && registry["fairsharing"] != "NA"
+                    tags << create_tag("https://fairsharing.org/#{registry["fairsharing-coll"]}", "icon-database", "Standards/Databases") if registry["fairsharing-coll"] && registry["fairsharing-coll"] != "NA"
+                    tags << create_tag("https://tess.elixir-europe.org/search?q=#{registry["tess"]}", "icon-graduation-cap", "Training") if registry["tess"] && registry["tess"] != "NA"
+                    tags << create_tag("https://europepmc.org/article/MED/#{registry["europmc"]}", "icon-book-open", "Publication") if registry["europmc"] && registry["europmc"] != "NA"
                 end
 
                 instances = @instances_by_tool[tool["id"]]
@@ -135,7 +135,7 @@ module Jekyll
             end
 
             def create_tag(url, icon, label)
-                "<a href='#{html_attr(url)}' target='_blank' rel='noopener'><span class='badge bg-dark text-white hover-primary'><i class='fa-solid #{icon} me-2'></i>#{html_escape(label)}</span></a>"
+                "<a href='#{html_attr(url)}' target='_blank' rel='noopener'><span class='badge bg-dark text-white hover-primary'><i class='#{icon} me-2'></i>#{html_escape(label)}</span></a>"
             end
 
             def instances_dropdown(instances, site, tool_id)
@@ -156,7 +156,7 @@ module Jekyll
                             id='#{dd_id}'
                             data-bs-toggle='dropdown'
                             aria-expanded='false'>
-                    <i class='fa-solid fa-globe me-2'></i>Instances
+                    <i class='icon-globe me-2'></i>Instances
                     </button>
                     <ul class='dropdown-menu' aria-labelledby='#{dd_id}'>
                     #{items}
