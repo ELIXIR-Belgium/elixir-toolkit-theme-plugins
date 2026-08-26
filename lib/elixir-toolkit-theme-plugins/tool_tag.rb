@@ -124,7 +124,6 @@ module Jekyll
                     registry = tool["registry"]
                     tags << create_tag("https://bio.tools/#{registry["biotools"]}", "fa-info", "Tool info") if registry["biotools"] && registry["biotools"] != "NA"
                     tags << create_tag("https://fairsharing.org/FAIRsharing.#{registry["fairsharing"]}", "fa-database", "Standards/Databases") if registry["fairsharing"] && registry["fairsharing"] != "NA"
-                    tags << create_tag("https://fairsharing.org/#{registry["fairsharing-coll"]}", "fa-database", "Standards/Databases") if registry["fairsharing-coll"] && registry["fairsharing-coll"] != "NA"
                     tags << create_tag("https://tess.elixir-europe.org/search?q=#{registry["tess"]}", "fa-graduation-cap", "Training") if registry["tess"] && registry["tess"] != "NA"
                     tags << create_tag("https://europepmc.org/article/MED/#{registry["europmc"]}", "fa-book", "Publication") if registry["europmc"] && registry["europmc"] != "NA"
                 end
