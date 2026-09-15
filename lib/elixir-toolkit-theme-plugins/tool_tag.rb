@@ -124,7 +124,6 @@ module Jekyll
                     registry = tool["registry"]
                     tags << create_tag("https://bio.tools/#{registry["biotools"]}", "icon-info", "Tool info") if registry["biotools"] && registry["biotools"] != "NA"
                     tags << create_tag("https://fairsharing.org/FAIRsharing.#{registry["fairsharing"]}", "icon-database", "Standards/Databases") if registry["fairsharing"] && registry["fairsharing"] != "NA"
-                    tags << create_tag("https://fairsharing.org/#{registry["fairsharing-coll"]}", "icon-database", "Standards/Databases") if registry["fairsharing-coll"] && registry["fairsharing-coll"] != "NA"
                     tags << create_tag("https://tess.elixir-europe.org/search?q=#{registry["tess"]}", "icon-graduation-cap", "Training") if registry["tess"] && registry["tess"] != "NA"
                     tags << create_tag("https://europepmc.org/article/MED/#{registry["europmc"]}", "icon-book-open", "Publication") if registry["europmc"] && registry["europmc"] != "NA"
                 end
@@ -143,7 +142,8 @@ module Jekyll
 
                 items = instances.map do |inst|
                     href = inst["url"] || resolve_page_url(inst["page_path"], site) || "#"
-                    flag = inst["country_code"].to_s.strip.empty? ? "" : "<span class='flag-icon ms-2 shadow-sm flag-icon-#{inst["country_code"].downcase}'></span>"
+                    country_code = inst["country_code"].to_s.strip.downcase
+                    flag = country_code.empty? ? "" : "<span class='fi fi-#{html_attr(country_code)} ms-2 shadow-sm'></span>"
                     name = html_escape(inst["name"])
                     url  = html_attr(href)
                     "<li><a class='dropdown-item' href='#{url}' target='_blank' rel='noopener'>#{name} #{flag}</a></li>"
