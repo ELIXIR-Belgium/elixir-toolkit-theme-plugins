@@ -126,6 +126,7 @@ module Jekyll
                     tags << create_tag("https://fairsharing.org/FAIRsharing.#{registry["fairsharing"]}", "icon-database", "Standards/Databases") if registry["fairsharing"] && registry["fairsharing"] != "NA"
                     tags << create_tag("https://tess.elixir-europe.org/search?q=#{registry["tess"]}", "icon-graduation-cap", "Training") if registry["tess"] && registry["tess"] != "NA"
                     tags << create_tag("https://europepmc.org/article/MED/#{registry["europmc"]}", "icon-book-open", "Publication") if registry["europmc"] && registry["europmc"] != "NA"
+                    tags << create_tag("https://workflowhub.eu/workflows/#{registry["workflowhub"]}", "icon-workflow", "WorkflowHub") if registry["workflowhub"] && registry["workflowhub"] != "NA"
                 end
 
                 instances = @instances_by_tool[tool["id"]]
